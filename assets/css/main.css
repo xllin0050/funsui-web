@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@theme {
+    --color-poseidon-50: #f1f8fe;
+    --color-poseidon-100: #e4f0fb;
+    --color-poseidon-200: #cae4f7;
+    --color-poseidon-300: #a0d1f3;
+    --color-poseidon-400: #6cb9ea;
+    --color-poseidon-500: #3ea0df;
+    --color-poseidon-600: #1984d2;
+    --color-poseidon-700: #1a6bad;
+    --color-poseidon-800: #115689;
+    --color-poseidon-900: #184971;
+    --color-poseidon-950: #0e2a43;
+}

@@ -7,7 +7,6 @@ services:
       - ..:/workspace:cached
     command: sleep infinity
     ports:
-      - "3000:3000"
-      - "5173:5173" # 如果用Vite開發時也可以用
+      - "3100:3100"
     environment:
       - NODE_ENV=development
