@@ -7,6 +7,9 @@
   "remoteUser": "node",
   "customizations": {
     "vscode": {
+      "files.associations": {
+        "*.css": "tailwindcss"
+      },
       "extensions": [
         "dbaeumer.vscode-eslint",
         "mhutchie.git-graph",
