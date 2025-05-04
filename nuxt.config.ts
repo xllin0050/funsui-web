@@ -16,5 +16,16 @@ export default defineNuxtConfig({
     "@nuxt/test-utils/module",
     "@nuxt/image",
     "@nuxt/icon",
-  ]
+  ],
+  // 將環境變數暴露給客戶端
+  runtimeConfig: {
+    // 僅在伺服器端可用的私有金鑰
+    // privateKey: process.env.PRIVATE_KEY,
+    
+    // 公開金鑰，也可在客戶端使用
+    public: {
+      supabaseUrl: process.env.SUPABASE_URL,
+      supabaseKey: process.env.SUPABASE_KEY
+    }
+  }
 })
