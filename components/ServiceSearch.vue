@@ -132,71 +132,80 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 // 狀態管理
-const searchQuery = ref('')
-const isAdvancedFilterOpen = ref(false)
-const selectedServiceType = ref('')
-const selectedRegion = ref('')
-const priceRange = ref(5000)
-const selectedExperience = ref('')
-const selectedLanguage = ref('')
+const searchQuery = ref('');
+const isAdvancedFilterOpen = ref(false);
+const selectedServiceType = ref('');
+const selectedRegion = ref('');
+const priceRange = ref(5000);
+const selectedExperience = ref('');
+const selectedLanguage = ref('');
 
-// 模擬數據
+// 服務類型數據
 const serviceTypes = [
-  { id: 'diving_lesson', name: '潛水課程' },
-  { id: 'guided_dive', name: '導潛服務' },
-  { id: 'equipment_rental', name: '裝備租賃' },
-  { id: 'diving_trip', name: '潛水旅行' },
-]
+  { id: '潛水課程', name: '潛水課程' },
+  { id: '導潛服務', name: '導潛服務' },
+  { id: '裝備租賃', name: '裝備租賃' },
+  { id: '團體旅遊', name: '團體旅遊' },
+];
 
+// 地區數據
 const regions = [
   { id: 'north', name: '北部' },
   { id: 'east', name: '東部' },
   { id: 'south', name: '南部' },
-  { id: 'offshore', name: '離島' },
-]
+  { id: 'islands', name: '離島' },
+];
 
 const experienceLevels = [
   { id: 'beginner', name: '初學者' },
   { id: 'intermediate', name: '中級' },
   { id: 'advanced', name: '進階' },
   { id: 'professional', name: '專業' },
-]
+];
 
 const languages = [
   { id: 'zh_tw', name: '中文' },
   { id: 'en', name: '英文' },
   { id: 'jp', name: '日文' },
   { id: 'kr', name: '韓文' },
-]
+];
 
 // 方法
 const toggleAdvancedFilter = () => {
-  isAdvancedFilterOpen.value = !isAdvancedFilterOpen.value
-}
+  isAdvancedFilterOpen.value = !isAdvancedFilterOpen.value;
+};
 
+// 搜索服務並導航到搜索結果頁面
 const searchServices = () => {
   // 構建搜索參數
-  const searchParams = {
-    query: searchQuery.value,
-    serviceType: selectedServiceType.value,
-    region: selectedRegion.value,
-    price: priceRange.value,
-    experience: selectedExperience.value,
-    language: selectedLanguage.value
-  }
+  const params = {};
   
-  // 這裡可以發送搜索請求或觸發事件
-  console.log('搜索參數:', searchParams)
+  // 只添加非空的參數
+  if (searchQuery.value) params.q = searchQuery.value;
+  if (selectedServiceType.value) params.type = selectedServiceType.value;
+  if (selectedRegion.value) params.region = selectedRegion.value;
+  if (priceRange.value) params.price = priceRange.value;
+  if (selectedExperience.value) params.exp = selectedExperience.value;
+  if (selectedLanguage.value) params.lang = selectedLanguage.value;
+  
+  // 在控制台輸出搜索參數
+  console.log('搜索參數:', params);
   
   // 觸發搜索事件，讓父組件知道
-  emit('search', searchParams)
-}
+  emit('search', params);
+  
+  // 導航到搜索結果頁面，帶上查詢參數
+  router.push({ path: '/search', query: params });
+};
 
 // 定義組件事件
-const emit = defineEmits(['search'])
+const emit = defineEmits(['search']);
 </script>
 
 <style scoped>

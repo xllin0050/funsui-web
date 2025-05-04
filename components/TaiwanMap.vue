@@ -51,13 +51,13 @@
         <!-- 離島地區 -->
         <div
           class="region-marker absolute"
-          :class="{ 'region-active': selectedRegion === 'offshore' }"
+          :class="{ 'region-active': selectedRegion === 'islands' }"
           style="top: 50%; left: 30%"
-          @click="selectRegion('offshore')"
+          @click="selectRegion('islands')"
         >
-          <div class="region-circle" :style="{ backgroundColor: getRegionColor('offshore') }">
+          <div class="region-circle" :style="{ backgroundColor: getRegionColor('islands') }">
             <div class="region-name">離島</div>
-            <div class="region-count">{{ getServiceCount("offshore") }} 個服務</div>
+            <div class="region-count">{{ getServiceCount("islands") }} 個服務</div>
           </div>
         </div>
       </div>
@@ -79,16 +79,18 @@
 
 <script setup>
 import { ref, watch } from "vue";
+import { useRouter } from "vue-router";
 
 // 狀態管理
 const selectedRegion = ref("");
+const router = useRouter();
 
 // 各地區的潛水服務數量
 const serviceCounts = {
   north: 42,
   east: 28,
   south: 56,
-  offshore: 35,
+  islands: 35,
 };
 
 // 地區對應的特色地點
@@ -99,7 +101,7 @@ const regionToHotspots = {
   north: ['keelung', 'taipei', 'newtaipei'],
   east: ['hualien', 'taitung', 'greenisland'],
   south: ['kaohsiung', 'pingtung', 'kenting'],
-  offshore: ['penghu', 'liuqiu', 'orchidisland']
+  islands: ['penghu', 'liuqiu', 'orchidisland']
 }
 */
 
@@ -119,6 +121,11 @@ const selectRegion = region => {
   } else {
     selectedRegion.value = region;
   }
+  console.log("選擇的地區:", region);
+  // 觸發地區選擇事件
+  emit("region-selected", region);
+  // 導航到對應的地區頁面
+  router.push(`/region/${region}`);
 };
 
 const getRegionColor = region => {
