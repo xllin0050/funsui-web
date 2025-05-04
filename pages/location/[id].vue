@@ -61,6 +61,7 @@
               <span class="text-teal-700 font-medium">NT$ {{ service.price || "洽詢" }}</span>
               <button
                 class="bg-teal-600 text-white px-3 py-1 rounded hover:bg-teal-700 transition-colors"
+                @click="viewServiceDetails(service.id)"
               >
                 查看詳情
               </button>
@@ -118,6 +119,11 @@ async function fetchLocationServices() {
   } finally {
     loading.value = false;
   }
+}
+
+// 查看服務詳情
+function viewServiceDetails(serviceId) {
+  router.push(`/service/${serviceId}`);
 }
 
 // 生命週期鉤子
