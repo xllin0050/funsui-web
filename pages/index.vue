@@ -8,15 +8,15 @@
         <div class="wave wave1" :style="{ transform: `translateY(${wave1Offset}px)` }"></div>
         <div class="wave wave2" :style="{ transform: `translateY(${wave2Offset}px)` }"></div>
         <div class="wave wave3" :style="{ transform: `translateY(${wave3Offset}px)` }"></div>
-        <div class="wave wave4" :style="{ transform: `translateY(${wave3Offset * 1.2}px)` }"></div>
-        <div class="wave wave5" :style="{ transform: `translateY(${wave2Offset * 1.5}px)` }"></div>
+        <div class="wave wave4" :style="{ transform: `translateY(${wave4Offset}px)` }"></div>
+        <div class="wave wave5" :style="{ transform: `translateY(${wave5Offset}px)` }"></div>
       </div>
 
       <!-- 頁首 (移動到波浪內區域) -->
       <PageHeader class="relative z-30" />
 
       <!-- 主要內容 -->
-      <main class="main-section relative pt-20">
+      <main class="main-section relative pt-10">
         <!-- 圓形按鈕 -->
         <div
           ref="circlesContainerRef"
@@ -91,9 +91,11 @@ const services = ref([]);
 
 // 視差效果相關變數
 const scrollY = ref(0);
-const wave1Offset = computed(() => scrollY.value * 0.1);
-const wave2Offset = computed(() => scrollY.value * 0.2);
-const wave3Offset = computed(() => scrollY.value * 0.3);
+const wave1Offset = computed(() => scrollY.value * 0.03);
+const wave2Offset = computed(() => scrollY.value * 0.05);
+const wave3Offset = computed(() => scrollY.value * 0.07);
+const wave4Offset = computed(() => scrollY.value * 0.09);
+const wave5Offset = computed(() => scrollY.value * 0.1);
 
 // 圓形按鈕相關變數
 const activeComponent = ref(null);
@@ -216,7 +218,8 @@ onUnmounted(() => {
 <style scoped>
 /* 主內容區域 */
 .main-content-area {
-  min-height: 600px;
+  height: 500px;
+  min-height: 500px;
   position: relative;
 }
 
@@ -231,9 +234,10 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   width: 100%;
-  height: 600px; /* 增加波浪比例 */
+  height: 500px; /* 增加波浪比例 */
   overflow: hidden;
   z-index: 0;
+  background: linear-gradient(to bottom, var(--color-poseidon-200), var(--color-poseidon-300));
 }
 
 .wave {
@@ -247,35 +251,36 @@ onUnmounted(() => {
 
 .wave1 {
   top: 0;
-  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 150" xmlns="http://www.w3.org/2000/svg"><path d="M0,75 C200,150 400,0 600,75 C800,150 1000,0 1200,75 L1200,0 L0,0 Z" fill="%230891b2" opacity="0.6"/></svg>');
-  z-index: 5;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 150" xmlns="http://www.w3.org/2000/svg"><path d="M0,75 C200,150 400,0 600,75 C800,150 1000,0 1200,75 L1200,0 L0,0 Z" fill="%231984d2" opacity="0.6"/></svg>');
+  z-index: 1;
   animation: wave-move 20s linear infinite;
 }
 
 .wave2 {
-  top: 50px;
-  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 180" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 C200,0 400,180 600,90 C800,0 1000,180 1200,90 L1200,0 C1000,35 800,12 600,36 C400,12 200,35 0,0 Z" fill="%230e7490" opacity="0.7"/></svg>');
-  z-index: 4;
+  top: 65px;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 2100 270" xmlns="http://www.w3.org/2000/svg"><path d="M0,135 C300,0 600,270 900,135 C1200,0 1500,270 1800,135 C1950,210 2025,60 2100,135 L2100,0 C1950,52 1650,18 1350,54 C1050,30 750,67 450,22 C300,37 150,60 0,0 Z" fill="%23cae4f7" opacity="0.5"/></svg>');
+  z-index: 2;
   animation: wave-move 15s linear infinite reverse;
+
 }
 
 .wave3 {
-  top: 130px;
-  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg"><path d="M0,110 C200,220 400,0 600,110 C800,220 1000,0 1200,110 L1200,0 C1050,60 900,22 600,37 C300,22 150,60 0,0 Z" fill="%23155e75" opacity="0.8"/></svg>');
+  top: 150px;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 2400 330" xmlns="http://www.w3.org/2000/svg"><path d="M0,165 C300,330 600,0 900,165 C1200,330 1500,0 1800,165 C2100,270 2250,90 2400,165 L2400,0 C2175,90 1950,33 1650,55 C1350,37 1050,60 750,33 C450,52 225,90 0,0 Z" fill="%23a0d1f3" opacity="0.4"/></svg>');
   z-index: 3;
   animation: wave-move 18s linear infinite;
 }
 
 .wave4 {
-  top: 150px;
-  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1800 260" xmlns="http://www.w3.org/2000/svg"><path d="M0,130 C200,0 400,260 600,130 C1000,0 1400,260 1800,130 L1800,0 C1400,50 1000,20 600,70 C300,20 150,50 0,0 L0,130 Z" fill="%23164e63" opacity="0.85"/></svg>');
+  top: 225px;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 2700 390" xmlns="http://www.w3.org/2000/svg"><path d="M0,195 C300,0 600,390 900,195 C1500,0 2100,390 2400,195 C2550,315 2625,120 2700,195 L2700,0 C2400,75 2100,30 1800,105 C1350,45 900,90 450,37 C300,52 150,67 0,0 L0,195 Z" fill="%236cb9ea" opacity="0.4"/></svg>');
   z-index: 2;
   animation: wave-move 22s linear infinite reverse;
 }
 
 .wave5 {
-  top: 90px;
-  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 2000 300" xmlns="http://www.w3.org/2000/svg"><path d="M0,150 C200,300 400,50 800,150 C1200,240 1600,50 2000,150 L2000,300 L0,300 L0,150 Z" fill="%23083344" opacity="0.9"/></svg>');
+  top: 135px;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 3000 450" xmlns="http://www.w3.org/2000/svg"><path d="M0,225 C300,450 600,75 1200,225 C1800,360 2400,75 2700,225 C2850,330 2925,150 3000,225 L3000,450 L0,450 L0,225 Z" fill="%233ea0df" opacity="0.3"/></svg>');
   z-index: 1;
   animation: wave-move 25s linear infinite;
 }
