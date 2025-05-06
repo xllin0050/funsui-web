@@ -82,9 +82,6 @@ import PanelComponent from "@/components/PanelComponent.vue";
 
 import { ref, onMounted, onUnmounted, computed } from "vue";
 
-// 服務數據
-const services = ref([]);
-
 // 視差效果相關變數
 const scrollY = ref(0);
 
@@ -156,23 +153,7 @@ const handleScroll = () => {
   }
 };
 
-// 獲取服務數據
-async function getServices() {
-  // 使用插件提供的 Supabase 客戶端
-  const { $supabase } = useNuxtApp();
-
-  const { data, error } = await $supabase.from("services").select("*");
-
-  if (error) {
-    console.error(error);
-  } else {
-    services.value = data.length ? data : [];
-    console.log("已載入服務數據:", services);
-  }
-}
-
 onMounted(() => {
-  getServices();
   window.addEventListener("scroll", handleScroll);
 
   // 確保頁面載入時滾動位置在頂部

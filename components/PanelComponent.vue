@@ -2,7 +2,11 @@
   <div class="component-panel">
     <div class="component-header">
       <button class="close-btn" @click="$emit('close')">
-        <Icon name="heroicons:x-mark" size="1.5rem" class="text-poseidon-600 hover:text-poseidon-800" />
+        <Icon
+          name="heroicons:x-mark"
+          size="1.5rem"
+          class="text-poseidon-600 hover:text-poseidon-800"
+        />
       </button>
     </div>
     <div class="component-inner">
@@ -13,14 +17,7 @@
 </template>
 
 <script setup>
-defineProps({
-  title: {
-    type: String,
-    required: true
-  }
-});
-
-defineEmits(['close']);
+defineEmits(["close"]);
 </script>
 
 <style scoped>

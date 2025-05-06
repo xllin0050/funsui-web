@@ -86,12 +86,7 @@ const selectedRegion = ref("");
 const router = useRouter();
 
 // 各地區的潛水服務數量
-const serviceCounts = {
-  north: 42,
-  east: 28,
-  south: 56,
-  islands: 35,
-};
+const serviceCounts = inject("servicesInRegion", ref([]));
 
 // 地區對應的特色地點
 // 該對應表可用於顯示特定地區的熱門地點
@@ -133,7 +128,10 @@ const getRegionColor = region => {
 };
 
 const getServiceCount = region => {
-  return serviceCounts[region] || 0;
+  // 在數組中查找匹配的地區記錄
+  const regionData = serviceCounts.value.find(item => item.region === region);
+  // 如果找到匹配的地區，返回其數量，否則返回 0
+  return regionData ? regionData.count : 0;
 };
 
 // 定義組件事件
