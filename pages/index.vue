@@ -5,18 +5,19 @@
     <div class="main-content-area relative overflow-hidden">
       <!-- 波浪背景 -->
       <div class="waves-container">
-        <div class="wave wave1" :style="{ transform: `translateY(${wave1Offset}px)` }"></div>
-        <div class="wave wave2" :style="{ transform: `translateY(${wave2Offset}px)` }"></div>
-        <div class="wave wave3" :style="{ transform: `translateY(${wave3Offset}px)` }"></div>
-        <div class="wave wave4" :style="{ transform: `translateY(${wave4Offset}px)` }"></div>
-        <div class="wave wave5" :style="{ transform: `translateY(${wave5Offset}px)` }"></div>
+        <div 
+          v-for="(wave, index) in waves" 
+          :key="index"
+          :class="[`wave`, `wave${index + 1}`]" 
+          :style="{ transform: `translateY(${waveOffsets[index]}px)` }"
+        ></div>
       </div>
 
       <!-- 頁首 (移動到波浪內區域) -->
       <PageHeader class="relative z-30" />
 
       <!-- 主要內容 -->
-      <main class="main-section relative pt-10">
+      <main class="main-section relative">
         <!-- 圓形按鈕 -->
         <div
           ref="circlesContainerRef"
@@ -40,28 +41,34 @@
     </div>
 
     <!-- 組件容器 (main 區塊中的定位容器) -->
-    <div v-if="activeComponent" class="component-overlay" @click="closeActiveComponent">
-      <div class="centered-components" @click.stop>
+    <div v-if="activeComponent" class="component-overlay">
+      <div class="centered-components">
         <!-- 搜索組件 -->
-        <div v-if="activeComponent === 'search'" class="component-panel" @click.stop>
-          <div class="component-inner">
-            <ServiceSearch @search="handleSearch" />
-          </div>
-        </div>
+        <PanelComponent 
+          v-if="activeComponent === 'search'" 
+          title="服務搜索" 
+          @close="closeActiveComponent"
+        >
+          <ServiceSearch @search="handleSearch" />
+        </PanelComponent>
 
         <!-- 地點選擇組件 -->
-        <div v-if="activeComponent === 'location'" class="component-panel" @click.stop>
-          <div class="component-inner">
-            <LocationSelect @select-location="handleLocationSelect" />
-          </div>
-        </div>
+        <PanelComponent 
+          v-if="activeComponent === 'location'" 
+          title="熱門地點" 
+          @close="closeActiveComponent"
+        >
+          <LocationSelect @select-location="handleLocationSelect" />
+        </PanelComponent>
 
         <!-- 地圖組件 -->
-        <div v-if="activeComponent === 'map'" class="component-panel" @click.stop>
-          <div class="component-inner">
-            <TaiwanMap @region-selected="handleRegionSelected" />
-          </div>
-        </div>
+        <PanelComponent 
+          v-if="activeComponent === 'map'" 
+          title="台灣潛水地圖" 
+          @close="closeActiveComponent"
+        >
+          <TaiwanMap @region-selected="handleRegionSelected" />
+        </PanelComponent>
       </div>
     </div>
 
@@ -83,6 +90,7 @@ import TaiwanMap from "@/components/TaiwanMap.vue";
 import LocationCards from "@/components/LocationCards.vue";
 import CTASection from "@/components/CTASection.vue";
 import PageFooter from "@/components/PageFooter.vue";
+import PanelComponent from "@/components/PanelComponent.vue";
 
 import { ref, onMounted, onUnmounted, computed } from "vue";
 
@@ -91,11 +99,16 @@ const services = ref([]);
 
 // 視差效果相關變數
 const scrollY = ref(0);
-const wave1Offset = computed(() => scrollY.value * 0.03);
-const wave2Offset = computed(() => scrollY.value * 0.05);
-const wave3Offset = computed(() => scrollY.value * 0.07);
-const wave4Offset = computed(() => scrollY.value * 0.09);
-const wave5Offset = computed(() => scrollY.value * 0.1);
+
+// 波浪元素與位移計算
+const waves = [1, 2, 3, 4, 5]; // 5個波浪元素
+const waveOffsets = computed(() => [
+  scrollY.value * 0.03, // wave1
+  scrollY.value * 0.05, // wave2
+  scrollY.value * 0.07, // wave3
+  scrollY.value * 0.09, // wave4
+  scrollY.value * 0.1   // wave5
+]);
 
 // 圓形按鈕相關變數
 const activeComponent = ref(null);
@@ -105,28 +118,14 @@ const circles = [
   { component: "map", icon: "heroicons:map" },
 ];
 
-// 圓形位置計算
-const getRandomPosition = () => {
-  return {
-    top: Math.floor(Math.random() * 60) + 20 + "%",
-    left: Math.floor(Math.random() * 60) + 20 + "%",
-  };
-};
-
-// 圓形位置
-const circlePositions = ref(circles.map(() => getRandomPosition()));
-
 // 獲取圓形樣式
 const getCircleStyle = index => {
-  if (activeComponent.value === null) {
-    return circlePositions.value[index];
-  } else {
-    // 當有組件激活時，圓形按鈕排列在頂部
-    return {
-      top: `${10 + index * 5}%`,
-      left: `${30 + index * 20}%`,
-    };
-  }
+  // 水平置中排列按鈕
+  return {
+    top: "50%",
+    left: `${(index + 1) * 25}%`,
+    transform: "translate(-50%, -50%)"
+  };
 };
 
 // 切換組件顯示
@@ -146,8 +145,7 @@ const toggleComponent = component => {
 // 關閉當前激活的組件
 const closeActiveComponent = () => {
   activeComponent.value = null;
-  // 重新隨機排列圓形
-  circlePositions.value = circles.map(() => getRandomPosition());
+  // 圓形按鈕會自動恢復原排列
 };
 
 // 處理搜索事件
@@ -206,8 +204,13 @@ async function getServices() {
 onMounted(() => {
   getServices();
   window.addEventListener("scroll", handleScroll);
-  // 初始化隨機圓形位置
-  circlePositions.value = circles.map(() => getRandomPosition());
+  
+  // 確保頁面載入時滾動位置在頂部
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto"
+  });
 });
 
 onUnmounted(() => {
@@ -224,8 +227,8 @@ onUnmounted(() => {
 }
 
 .main-section {
-  min-height: 500px;
-  padding-top: 120px;
+  min-height: 425px;
+  /* padding-top: 120px; */
 }
 
 /* 波浪背景 */
@@ -288,13 +291,15 @@ onUnmounted(() => {
 /* 圓形按鈕 */
 .circles-container {
   position: absolute;
-  top: 0;
+  top: 50%;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
   z-index: 20;
   transition: all 0.5s ease;
   pointer-events: none;
+  display: flex;
+  justify-content: center;
 }
 
 .circle-button {
@@ -302,7 +307,7 @@ onUnmounted(() => {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0891b2, #155e75);
+  background: var(--color-white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -317,7 +322,7 @@ onUnmounted(() => {
   width: 45px;
   height: 45px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--color-poseidon-600);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -367,14 +372,53 @@ onUnmounted(() => {
 }
 
 .component-panel {
-  width: 400px;
-  max-width: 90%;
-  background-color: white;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 800px;
+  overflow: hidden;
+}
+
+.component-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background-color: #f1f8fe;
+  border-bottom: 1px solid #e4f0fb;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: rgba(202, 228, 247, 0.5);
+}
+
+.component-inner {
+  width: 100%;
+  height: 100%;
   border-radius: 0.75rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  animation: fadeIn 0.3s ease forwards;
-  max-height: 80vh;
-  overflow-y: auto;
+  overflow: hidden;
+  padding: 5px;
+}
+
+.from-left {
+  left: 5%;
+}
+
+.from-right {
+  right: 5%;
 }
 
 @keyframes fadeIn {

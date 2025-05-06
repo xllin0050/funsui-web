@@ -1,6 +1,6 @@
 <template>
   <!-- 頁首 Header，含 Logo、導覽列與 CTA 按鈕 -->
-  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur shadow-sm">
+  <header class="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur shadow-sm" v-bind="$attrs">
     <nav class="container mx-auto flex items-center justify-between py-4 px-4">
       <!-- Logo -->
       <div class="text-2xl font-bold text-poseidon-700 tracking-wide">Funsui</div>
