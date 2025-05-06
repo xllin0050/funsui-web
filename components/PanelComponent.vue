@@ -1,7 +1,6 @@
 <template>
   <div class="component-panel">
     <div class="component-header">
-      <h3 class="text-lg font-bold text-poseidon-800">{{ title }}</h3>
       <button class="close-btn" @click="$emit('close')">
         <Icon name="heroicons:x-mark" size="1.5rem" class="text-poseidon-600 hover:text-poseidon-800" />
       </button>
@@ -36,7 +35,7 @@ defineEmits(['close']);
 
 .component-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 12px 20px;
   background-color: #f1f8fe;

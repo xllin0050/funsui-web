@@ -5,10 +5,10 @@
     <div class="main-content-area relative overflow-hidden">
       <!-- 波浪背景 -->
       <div class="waves-container">
-        <div 
-          v-for="(wave, index) in waves" 
+        <div
+          v-for="(wave, index) in waves"
           :key="index"
-          :class="[`wave`, `wave${index + 1}`]" 
+          :class="[`wave`, `wave${index + 1}`]"
           :style="{ transform: `translateY(${waveOffsets[index]}px)` }"
         ></div>
       </div>
@@ -44,30 +44,18 @@
     <div v-if="activeComponent" class="component-overlay">
       <div class="centered-components">
         <!-- 搜索組件 -->
-        <PanelComponent 
-          v-if="activeComponent === 'search'" 
-          title="服務搜索" 
-          @close="closeActiveComponent"
-        >
-          <ServiceSearch @search="handleSearch" />
+        <PanelComponent v-if="activeComponent === 'search'" @close="closeActiveComponent">
+          <ServiceSearch />
         </PanelComponent>
 
         <!-- 地點選擇組件 -->
-        <PanelComponent 
-          v-if="activeComponent === 'location'" 
-          title="熱門地點" 
-          @close="closeActiveComponent"
-        >
-          <LocationSelect @select-location="handleLocationSelect" />
+        <PanelComponent v-if="activeComponent === 'location'" @close="closeActiveComponent">
+          <LocationSelect />
         </PanelComponent>
 
         <!-- 地圖組件 -->
-        <PanelComponent 
-          v-if="activeComponent === 'map'" 
-          title="台灣潛水地圖" 
-          @close="closeActiveComponent"
-        >
-          <TaiwanMap @region-selected="handleRegionSelected" />
+        <PanelComponent v-if="activeComponent === 'map'" @close="closeActiveComponent">
+          <TaiwanMap />
         </PanelComponent>
       </div>
     </div>
@@ -107,7 +95,7 @@ const waveOffsets = computed(() => [
   scrollY.value * 0.05, // wave2
   scrollY.value * 0.07, // wave3
   scrollY.value * 0.09, // wave4
-  scrollY.value * 0.1   // wave5
+  scrollY.value * 0.1, // wave5
 ]);
 
 // 圓形按鈕相關變數
@@ -124,7 +112,7 @@ const getCircleStyle = index => {
   return {
     top: "50%",
     left: `${(index + 1) * 25}%`,
-    transform: "translate(-50%, -50%)"
+    transform: "translate(-50%, -50%)",
   };
 };
 
@@ -146,24 +134,6 @@ const toggleComponent = component => {
 const closeActiveComponent = () => {
   activeComponent.value = null;
   // 圓形按鈕會自動恢復原排列
-};
-
-// 處理搜索事件
-const handleSearch = params => {
-  console.log("搜索參數:", params);
-  // 這裡可以進行搜索相關操作
-};
-
-// 處理地點選擇事件
-const handleLocationSelect = location => {
-  console.log("選擇地點:", location);
-  // 這裡可以進行地點選擇相關操作
-};
-
-// 處理地區選擇事件
-const handleRegionSelected = region => {
-  console.log("選擇地區:", region);
-  // 這裡可以進行地區選擇相關操作
 };
 
 // 圓形容器參考
@@ -204,12 +174,12 @@ async function getServices() {
 onMounted(() => {
   getServices();
   window.addEventListener("scroll", handleScroll);
-  
+
   // 確保頁面載入時滾動位置在頂部
   window.scrollTo({
     top: 0,
     left: 0,
-    behavior: "auto"
+    behavior: "auto",
   });
 });
 
@@ -264,7 +234,6 @@ onUnmounted(() => {
   background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 2100 270" xmlns="http://www.w3.org/2000/svg"><path d="M0,135 C300,0 600,270 900,135 C1200,0 1500,270 1800,135 C1950,210 2025,60 2100,135 L2100,0 C1950,52 1650,18 1350,54 C1050,30 750,67 450,22 C300,37 150,60 0,0 Z" fill="%23cae4f7" opacity="0.5"/></svg>');
   z-index: 2;
   animation: wave-move 15s linear infinite reverse;
-
 }
 
 .wave3 {
