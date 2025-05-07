@@ -31,9 +31,16 @@
             :class="{ active: activeComponent === circle.component }"
             :style="getCircleStyle(index)"
             @click="toggleComponent(circle.component)"
+            @mouseenter="showTooltip(index, $event)"
+            @mouseleave="hideTooltip(index)"
           >
             <div class="inner-circle">
               <Icon :name="circle.icon" size="1.5rem" class="text-white" />
+            </div>
+            <!-- 提示框 -->
+            <div ref="tooltips" class="tooltip-popover" :class="{ active: activeTooltips[index] }">
+              <div class="tooltip-arrow"></div>
+              <div class="tooltip-content">{{ circle.tooltip }}</div>
             </div>
           </div>
         </div>
@@ -82,6 +89,8 @@ import PanelComponent from "@/components/PanelComponent.vue";
 
 import { ref, onMounted, onUnmounted, computed } from "vue";
 
+// const { $anime, $animeUtils } = useNuxtApp();
+
 // 視差效果相關變數
 const scrollY = ref(0);
 
@@ -98,10 +107,26 @@ const waveOffsets = computed(() => [
 // 圓形按鈕相關變數
 const activeComponent = ref(null);
 const circles = [
-  { component: "search", icon: "heroicons:magnifying-glass" },
-  { component: "location", icon: "heroicons:map-pin" },
-  { component: "map", icon: "heroicons:map" },
+  { component: "search", icon: "heroicons:magnifying-glass", tooltip: "搜尋潛水服務" },
+  { component: "location", icon: "heroicons:map-pin", tooltip: "熱門潛水地點" },
+  { component: "map", icon: "heroicons:map", tooltip: "台灣潛水地圖" },
 ];
+
+// 提示框相關變數
+
+const activeTooltips = ref([false, false, false]);
+
+// 顯示提示框
+
+const showTooltip = (index, _event) => {
+  if (activeComponent.value === circles[index].component) return;
+  activeTooltips.value[index] = true;
+};
+
+// 隱藏提示框
+const hideTooltip = index => {
+  activeTooltips.value[index] = false;
+};
 
 // 獲取圓形樣式
 const getCircleStyle = index => {
@@ -286,6 +311,48 @@ onUnmounted(() => {
 .circle-button.active {
   transform: scale(1.2);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 提示框樣式 */
+.tooltip-popover {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 12px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  color: #333;
+  min-width: 120px;
+  text-align: center;
+  z-index: 20;
+}
+
+.tooltip-popover.active {
+  opacity: 1;
+}
+
+.tooltip-arrow {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid white;
+}
+
+.tooltip-content {
+  font-weight: 500;
 }
 
 /* 組件過度層 */

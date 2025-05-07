@@ -18,6 +18,10 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 [tailwindcss](https://tailwindcss.com/docs)
 
+## animejs
+
+[animejs](https://animejs.com/documentation/)
+
 ## DEMO
 
 https://funsei.netlify.app/
