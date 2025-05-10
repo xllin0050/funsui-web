@@ -18,7 +18,7 @@
         <Icon :name="circle.icon" size="1.5rem" class="text-white" />
       </div>
       <!-- 提示框 -->
-      <div ref="tooltips" class="tooltip-popover" :class="{ active: activeTooltips[index] }">
+      <div class="tooltip-popover" :class="{ active: activeTooltips[index] }">
         <div class="tooltip-arrow"></div>
         <div class="tooltip-content">{{ circle.tooltip }}</div>
       </div>
@@ -27,16 +27,16 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits } from "vue";
 
 const props = defineProps({
   activeComponent: {
     type: String,
-    default: null
-  }
+    default: null,
+  },
 });
 
-const emit = defineEmits(['update:activeComponent']);
+const emit = defineEmits(["update:activeComponent"]);
 
 // 圓形按鈕相關變數
 const circles = [
@@ -74,13 +74,13 @@ const toggleComponent = component => {
   if (props.activeComponent === component) {
     closeActiveComponent();
   } else {
-    emit('update:activeComponent', component);
+    emit("update:activeComponent", component);
   }
 };
 
 // 關閉當前激活的組件
 const closeActiveComponent = () => {
-  emit('update:activeComponent', null);
+  emit("update:activeComponent", null);
 };
 
 // 圓形容器參考
@@ -89,7 +89,7 @@ const circlesContainerRef = ref(null);
 // 向父組件暴露容器引用和關閉方法
 defineExpose({
   circlesContainerRef,
-  closeActiveComponent
+  closeActiveComponent,
 });
 </script>
 

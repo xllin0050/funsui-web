@@ -1,8 +1,8 @@
 <template>
-  <!-- 主應用容器 -->
   <div>
-    <!-- 路由視圖 -->
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
 
@@ -10,7 +10,6 @@
 import { ref, onMounted, provide } from "vue";
 
 // 定義服務數據和熱門地區的響應式變數
-const services = ref([]);
 const popularLocations = ref([]);
 const servicesInRegion = ref([]);
 
@@ -28,9 +27,6 @@ async function getServices() {
 
     if (error) throw error;
 
-    // 存儲原始數據
-    services.value = data || [];
-
     // 計算每個 location 的數量
     const locationCounts = {};
     // 計算每個 region 的數量
@@ -41,7 +37,6 @@ async function getServices() {
       if (item.location && item.location.trim()) {
         locationCounts[item.location] = (locationCounts[item.location] || 0) + 1;
       }
-
       // 統計 region
       if (item.region && item.region.trim()) {
         regionCounts[item.region] = (regionCounts[item.region] || 0) + 1;

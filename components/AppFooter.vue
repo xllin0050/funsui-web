@@ -16,10 +16,3 @@
     </div>
   </footer>
 </template>
-
-<script setup>
-// 頁尾不需額外 JS
-</script>
-
-<style scoped>
-</style>
