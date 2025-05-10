@@ -1,6 +1,6 @@
 <template>
-  <div class="component-panel">
-    <div class="component-header">
+  <div class="bg-poseidon-50 rounded shadow w-full sm:w-[600px]">
+    <div class="flex items-center justify-end bg-poseidon-100 p-2">
       <button class="close-btn" @click="$emit('close')">
         <Icon
           name="heroicons:x-mark"
@@ -9,7 +9,7 @@
         />
       </button>
     </div>
-    <div class="component-inner">
+    <div>
       <!-- 使用默認插槽来展示内容 -->
       <slot></slot>
     </div>
@@ -21,24 +21,6 @@ defineEmits(["close"]);
 </script>
 
 <style scoped>
-.component-panel {
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  width: 90%;
-  max-width: 800px;
-  overflow: hidden;
-}
-
-.component-header {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 12px 20px;
-  background-color: #f1f8fe;
-  border-bottom: 1px solid #e4f0fb;
-}
-
 .close-btn {
   background: transparent;
   border: none;
@@ -53,12 +35,5 @@ defineEmits(["close"]);
 
 .close-btn:hover {
   background-color: rgba(202, 228, 247, 0.5);
-}
-
-.component-inner {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  padding: 20px;
 }
 </style>

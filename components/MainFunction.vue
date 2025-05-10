@@ -64,7 +64,6 @@ const closeActiveComponent = () => {
     opacity: 1;
   }
 }
-
 .component-overlay {
   position: fixed;
   top: 0;
@@ -78,12 +77,4 @@ const closeActiveComponent = () => {
   justify-content: center;
   animation: fadeInOverlay 0.3s ease forwards;
 }
-/* .centered-components {
-  position: relative;
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
 </style>

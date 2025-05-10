@@ -1,8 +1,8 @@
 <template>
-  <div class="taiwan-map-container bg-white p-6 rounded-lg shadow-sm h-full">
+  <div class="taiwan-map-container bg-gray-50 p-6 rounded-lg shadow-sm h-full">
     <div class="map-header mb-4">
-      <h2 class="text-2xl font-bold text-teal-700">探索台灣潛水地點</h2>
-      <p class="text-gray-600 mt-1">點擊地圖上的地區，探索當地的潛水服務</p>
+      <h2 class="text-2xl font-bold text-poseidon-700">探索台灣潛水地點</h2>
+      <p class="text-poseidon-600 mt-1">點擊地圖上的地區，探索當地的潛水服務</p>
     </div>
 
     <div class="map-container relative bg-gray-50 rounded-lg" style="height: 500px">
@@ -65,11 +65,11 @@
       <!-- 地圖圖例 -->
       <div class="map-legend absolute top-4 left-4 bg-white p-2 rounded shadow-sm text-sm">
         <div class="flex items-center">
-          <div class="w-4 h-4 rounded-full bg-teal-500 mr-2"></div>
+          <div class="w-4 h-4 rounded-full bg-poseidon-500 mr-2"></div>
           <span>點擊地圖上的點</span>
         </div>
         <div class="flex items-center mt-1">
-          <div class="w-4 h-4 rounded-full bg-teal-700 mr-2"></div>
+          <div class="w-4 h-4 rounded-full bg-poseidon-700 mr-2"></div>
           <span>探索各地區的潛水服務</span>
         </div>
       </div>
@@ -124,7 +124,7 @@ const selectRegion = region => {
 };
 
 const getRegionColor = region => {
-  return selectedRegion.value === region ? "#0e9488" : "#14b8a6";
+  return selectedRegion.value === region ? "#a0d1f3" : "#3ea0df";
 };
 
 const getServiceCount = region => {
@@ -156,8 +156,8 @@ defineExpose({
 }
 
 .region-circle {
-  width: 120px;
-  height: 120px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
@@ -185,6 +185,6 @@ defineExpose({
 }
 
 .region-active .region-circle {
-  box-shadow: 0 0 0 4px #0f766e;
+  box-shadow: 0 0 0 4px #1a6bad;
 }
 </style>
