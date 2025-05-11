@@ -1,3 +1,5 @@
+<script setup></script>
+
 <template>
   <svg
     id="svg"
@@ -43,4 +45,6 @@
   </svg>
 </template>
 
-<script setup></script>
+<style scoped>
+@import "@/assets/css/wave-animations.css";
+</style>
