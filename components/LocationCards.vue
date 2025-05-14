@@ -8,12 +8,31 @@
           v-for="(loc, i) in locations"
           :key="i"
           ref="cardRefs"
-          class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 hover:shadow-xl transition p-0 flex flex-col"
+          class="bg-transparent overflow-hidden hover:scale-105 transition p-0 h-[400px] flex flex-col"
         >
-          <img :src="loc.img" :alt="loc.name" class="h-48 w-full object-cover" />
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-poseidon-700 mb-2">{{ loc.name }}</h3>
-            <p class="text-gray-600 mb-4 flex-1">{{ loc.desc }}</p>
+          <div class="relative h-full w-full overflow-hidden">
+            <div
+              class="absolute inset-0 bg-cover bg-center"
+              :style="{
+                backgroundImage: `url(${loc.img})`,
+                maskImage: getBlobMaskUrl(i),
+                WebkitMaskImage: getBlobMaskUrl(i),
+                maskSize: 'cover',
+                WebkitMaskSize: 'cover',
+                maskPosition: 'center',
+                WebkitMaskPosition: 'center',
+                maskRepeat: 'no-repeat',
+                WebkitMaskRepeat: 'no-repeat',
+              }"
+            ></div>
+            <div
+              class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex-1 flex flex-col"
+            >
+              <h3 class="text-xl font-bold text-white mb-2">
+                {{ loc.name }}
+              </h3>
+              <!-- <p class="text-gray-600 mb-4 flex-1">{{ loc.desc }}</p> -->
+            </div>
           </div>
         </div>
       </div>
@@ -25,12 +44,26 @@
 import { useTemplateRef, onMounted } from "vue";
 const { $anime, $animeUtils, $animeStagger } = useNuxtApp();
 
+// 使用 base64 編碼的 SVG 作為 mask-image
+// 注意：我們原本試圖為每個卡片生成不同的 blob 形狀，
+// 但因為在 SSR 環境中使用 btoa 函數可能會失敗，
+// 所以我們改為使用預設的静態 blob 形狀。
+
+// 預設的 blob mask URL
+const blobMaskUrl =
+  "url('data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMjAwIDIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNDkuNSwtNTAuMkM2My44LC0zNS4yLDc0LjgsLTE3LjYsNzcsMi4xQzc5LjEsMjEuOSw3Mi40LDQzLjgsNTguMSw1OC45QzQzLjgsNzQsMjEuOSw4Mi40LC0wLjYsODIuOUMtMjMsODMuNSwtNDYsNzYuMiwtNjAuOCw2MS4xQy03NS41LDQ2LC04Mi4xLDIzLC04MC40LDEuNkMtNzguOCwtMTkuNywtNjksLTM5LjUsLTU0LjMsLTU0LjVDLTM5LjUsLTY5LjUsLTE5LjcsLTc5LjgsLTEuMSwtNzguN0MxNy42LC03Ny43LDM1LjIsLTY1LjIsNDkuNSwtNTAuMloiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMCAxMDApIi8+PC9zdmc+')";
+
+// 生成 blob mask URL 的函數 - 目前因為 SSR 環境下的限制，我們會為所有卡片使用相同的 blob 形狀
+function getBlobMaskUrl(_index) {
+  return blobMaskUrl;
+}
+
 const cardRefs = useTemplateRef("cardRefs");
 
 const grid = [3, 2];
 
 function animateCards() {
-  const from = $animeUtils.random(0, 6 * 4);
+  const from = $animeUtils.random(0, 3);
   // const ramdomElement = $animeUtils.randomPick(cardRefs.value);
   $anime(cardRefs.value, {
     translateX: [
@@ -41,8 +74,8 @@ function animateCards() {
       { to: $animeStagger("2px", { grid, from, axis: "y" }) },
       { to: 0, ease: "inOutQuad" },
     ],
-    opacity: [{ to: 0.6, ease: "inOutCubic" }, { to: 1 }],
-    delay: $animeStagger(300, { grid, from }),
+    opacity: [{ to: 0.8, ease: "inOutCubic" }, { to: 1 }],
+    delay: $animeStagger(85, { grid, from }),
     onComplete: animateCards,
   });
 }
