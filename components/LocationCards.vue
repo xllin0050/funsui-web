@@ -3,12 +3,12 @@
   <section id="locations" class="py-16 bg-poseidon-500">
     <div class="container mx-auto px-4">
       <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 text-white">熱門潛水地點推薦</h2>
-      <div class="grid gap-8 md:grid-cols-3">
+      <div class="grid gap-4 md:grid-cols-3">
         <div
           v-for="(loc, i) in locations"
           :key="i"
           ref="cardRefs"
-          class="bg-transparent overflow-hidden hover:scale-105 transition px-4 lg:px-0 h-[200px] lg:h-[350px] flex flex-col"
+          class="bg-transparent overflow-hidden hover:scale-105 transition px-4 lg:p-0 h-[200px] lg:h-[400px] flex flex-col"
         >
           <div class="relative h-full w-full overflow-hidden">
             <div
