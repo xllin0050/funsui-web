@@ -1,6 +1,6 @@
 <template>
   <!-- 頁尾 Footer -->
-  <footer id="contact" class="bg-[color:var(--color-poseidon-950)] text-white py-8 mt-10">
+  <footer id="contact" class="bg-poseidon-950 text-white py-8">
     <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
       <div class="mb-4 md:mb-0">
         <span class="font-bold text-lg">Funsui</span> &copy; {{ new Date().getFullYear() }}

@@ -8,11 +8,11 @@
           v-for="(loc, i) in locations"
           :key="i"
           ref="cardRefs"
-          class="bg-transparent overflow-hidden hover:scale-105 transition p-0 h-[400px] flex flex-col"
+          class="bg-transparent overflow-hidden hover:scale-105 transition px-4 lg:px-0 h-[200px] lg:h-[350px] flex flex-col"
         >
           <div class="relative h-full w-full overflow-hidden">
             <div
-              class="absolute inset-0 bg-cover bg-center"
+              class="absolute hidden lg:block inset-0 bg-cover bg-center"
               :style="{
                 backgroundImage: `url(${loc.img})`,
                 maskImage: getBlobMaskUrl(i),
@@ -26,9 +26,15 @@
               }"
             ></div>
             <div
+              class="absolute lg:hidden inset-0 bg-cover bg-center"
+              :style="{
+                backgroundImage: `url(${loc.img})`,
+              }"
+            ></div>
+            <div
               class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex-1 flex flex-col"
             >
-              <h3 class="text-xl font-bold text-white mb-2">
+              <h3 class="text-base lg:text-xl font-bold text-white mb-2">
                 {{ loc.name }}
               </h3>
               <!-- <p class="text-gray-600 mb-4 flex-1">{{ loc.desc }}</p> -->

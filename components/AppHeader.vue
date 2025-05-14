@@ -24,7 +24,7 @@
       <button
         class="ml-6 bg-poseidon-500 text-white px-5 py-2 rounded-full shadow-md hover:bg-poseidon-600 transition hidden md:block"
       >
-        立即搜尋
+        立即登入
       </button>
       <!-- 手機選單（可擴充） -->
     </nav>
