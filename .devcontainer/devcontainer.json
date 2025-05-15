@@ -5,11 +5,9 @@
   "workspaceFolder": "/workspace",
   "forwardPorts": [3100],
   "remoteUser": "node",
+  "postCreateCommand": "git config core.fileMode false && git config core.autocrlf input",
   "customizations": {
     "vscode": {
-      "files.associations": {
-        "*.css": "tailwindcss"
-      },
       "extensions": [
         "dbaeumer.vscode-eslint",
         "mhutchie.git-graph",
