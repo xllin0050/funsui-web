@@ -1,6 +1,6 @@
 <template>
   <!-- 推薦潛水地點 Cards -->
-  <section id="locations" class="py-16 bg-poseidon-500">
+  <section id="locations" class="py-16 bg-gradient-to-b from-poseidon-500 to-poseidon-50">
     <div class="container mx-auto px-4">
       <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 text-white">熱門潛水地點推薦</h2>
       <div class="grid gap-4 md:grid-cols-3">
@@ -8,7 +8,7 @@
           v-for="(loc, i) in locations"
           :key="i"
           ref="cardRefs"
-          class="bg-transparent overflow-hidden hover:scale-105 transition px-4 lg:p-0 h-[200px] lg:h-[400px] flex flex-col"
+          class="bg-transparent overflow-hidden hover:scale-105 transition px-4 lg:p-0 h-[200px] lg:h-[300px] flex flex-col"
         >
           <div class="relative h-full w-full overflow-hidden">
             <div
@@ -17,8 +17,8 @@
                 backgroundImage: `url(${loc.img})`,
                 maskImage: getBlobMaskUrl(i),
                 WebkitMaskImage: getBlobMaskUrl(i),
-                maskSize: 'cover',
-                WebkitMaskSize: 'cover',
+                maskSize: 'contain',
+                WebkitMaskSize: 'contain',
                 maskPosition: 'center',
                 WebkitMaskPosition: 'center',
                 maskRepeat: 'no-repeat',
@@ -80,6 +80,7 @@ function animateCards() {
       { to: $animeStagger("2px", { grid, from, axis: "y" }) },
       { to: 0, ease: "inOutQuad" },
     ],
+    rotate: $animeStagger("-2deg", { grid, from }),
     opacity: [{ to: 0.8, ease: "inOutCubic" }, { to: 1 }],
     delay: $animeStagger(85, { grid, from }),
     onComplete: animateCards,

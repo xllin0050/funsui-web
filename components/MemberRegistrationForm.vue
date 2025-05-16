@@ -1,19 +1,19 @@
 <template>
   <div class="registration-form-container">
     <h2 class="form-title">會員註冊</h2>
-    <form @submit.prevent="handleSubmit" class="registration-form">
+    <form class="registration-form" @submit.prevent="handleSubmit">
       <div class="form-grid">
         <div class="form-group">
           <label for="name">姓名</label>
-          <input type="text" id="name" v-model="formData.name" required placeholder="請輸入您的姓名">
+          <input id="name" v-model="formData.name" type="text" required placeholder="請輸入您的姓名">
         </div>
         <div class="form-group">
           <label for="phone">電話</label>
-          <input type="tel" id="phone" v-model="formData.phone" required placeholder="例如: 0912345678">
+          <input id="phone" v-model="formData.phone" type="tel" required placeholder="例如: 0912345678">
         </div>
         <div class="form-group full-width">
           <label for="email">電子信箱</label>
-          <input type="email" id="email" v-model="formData.email" required placeholder="例如: yourname@example.com">
+          <input id="email" v-model="formData.email" type="email" required placeholder="例如: yourname@example.com">
         </div>
         <div class="form-group">
           <label for="gender">性別</label>
@@ -35,7 +35,7 @@
         </div>
         <div class="form-group full-width">
           <label for="birthday">生日</label>
-          <input type="date" id="birthday" v-model="formData.birthday" required>
+          <input id="birthday" v-model="formData.birthday" type="date" required>
         </div>
       </div>
       <button type="submit" class="submit-button">註冊</button>
@@ -64,7 +64,7 @@ const handleSubmit = () => {
 
 <style scoped>
 .registration-form-container {
-  max-width: 800px;
+  max-width: 600px;
   margin: 10px auto;
   padding: 30px;
   background-color: #ECEFF1; /* 淺灰背景 */
