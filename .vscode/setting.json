@@ -1,30 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "eslint.validate": ["javascript", "typescript", "vue"],
-  "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.eslint": true
-  },
   "files.associations": {
     "*.css": "tailwindcss"
-  },
-  "tailwindCSS.includeLanguages": {
-    "plaintext": "html",
-    "javascript": "javascript",
-    "typescript": "typescript",
-    "vue": "html"
-  },
-  "tailwindCSS.experimental.classRegex": [
-    "tw`([^`]*)",
-    "tw\\(([^)]*)\\)",
-    "class(Name)?=\\\"([^\\\"]*)\\\""
-  ],
-  "vue.inlayHints.inlineHandlerLeading": true,
-  "vue.inlayHints.optionsWrapper": true,
-  "css.validate": false,
-  "scss.validate": false,
-  "editor.quickSuggestions": {
-    "strings": true
   }
 }

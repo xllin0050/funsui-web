@@ -1,7 +1,7 @@
 <template>
-  <div class="page-container">
+  <main class="page-container bg-poseidon-50 h-full font-sans">
     <MemberRegistrationForm />
-  </div>
+  </main>
 </template>
 
 <script setup>
@@ -10,12 +10,12 @@ import MemberRegistrationForm from '~/components/MemberRegistrationForm.vue';
 
 <style scoped>
 .page-container {
-
-  display: flex;
+  height: calc(100vh - 164px);
+  /* display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  background-color: #F0F4F8; /* 頁面背景色，可以根據整體風格調整 */
-  padding: 20px;
+  background-color: #F0F4F8; 
+  padding: 20px; */
 }
 </style>
