@@ -1,5 +1,5 @@
 <template>
-  <main class="page-container h-auto font-sans py-10">
+  <main class="h-auto bg-gradient-to-b py-10 font-sans">
     <MemberRegistrationForm />
   </main>
 </template>
@@ -8,6 +8,4 @@
 import MemberRegistrationForm from '~/components/MemberRegistrationForm.vue';
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
