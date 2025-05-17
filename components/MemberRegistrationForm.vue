@@ -4,7 +4,7 @@
     <form class="registration-form" @submit.prevent="handleSubmit">
       <div class="form-content">
         <!-- 姓名 -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="name">姓名</label>
           <input
             id="name"
@@ -15,10 +15,10 @@
             class="form-input"
             :disabled="loading"
           />
-        </div>
+        </div> -->
 
         <!-- 電話 -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="phone">電話</label>
           <input
             id="phone"
@@ -29,7 +29,7 @@
             class="form-input"
             :disabled="loading"
           />
-        </div>
+        </div> -->
 
         <!-- 電子信箱 -->
         <div class="form-group">
@@ -61,7 +61,7 @@
         </div>
 
         <!-- 性別 -->
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="gender">性別</label>
           <select
             id="gender"
@@ -75,7 +75,7 @@
             <option value="female">女性</option>
             <option value="other">其他</option>
           </select>
-        </div>
+        </div> -->
 
         <div class="form-group">
           <button type="submit" class="submit-button" :disabled="loading">
@@ -105,11 +105,8 @@ const router = useRouter();
 const loading = ref(false);
 
 const formData = ref({
-  name: '',
-  phone: '',
   email: '',
   password: '',
-  gender: '',
 });
 
 async function handleSubmit() {
@@ -117,24 +114,13 @@ async function handleSubmit() {
 
   try {
     // 1. 創建新用戶
-    const { data: authData, error: authError } = await $supabase.auth.signUp({
+    const { error: authError } = await $supabase.auth.signUp({
       email: formData.value.email,
       password: formData.value.password,
     });
 
     if (authError) throw authError;
-
-    // 2. 創建用戶資料
-    const { error: profileError } = await $supabase.from('profiles').insert({
-      id: authData.user.id,
-      name: formData.value.name,
-      phone: formData.value.phone,
-      gender: formData.value.gender,
-    });
-
-    if (profileError) throw profileError;
-
-    // 3. 註冊成功，轉導到登入頁
+    // 4. 註冊成功，轉導到登入頁
     await router.push('/login');
   } catch (e) {
     console.error('註冊錯誤:', e);

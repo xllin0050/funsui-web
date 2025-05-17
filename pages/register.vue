@@ -1,5 +1,5 @@
 <template>
-  <main class="h-auto bg-gradient-to-b py-10 font-sans">
+  <main class="h-auto py-10 font-sans">
     <MemberRegistrationForm />
   </main>
 </template>
