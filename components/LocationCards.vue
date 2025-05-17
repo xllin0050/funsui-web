@@ -1,18 +1,18 @@
 <template>
   <!-- 推薦潛水地點 Cards -->
-  <section id="locations" class="py-16 bg-gradient-to-b from-poseidon-500 to-poseidon-50">
+  <section id="locations" class="from-poseidon-500 to-poseidon-50 bg-gradient-to-b py-16">
     <div class="container mx-auto px-4">
-      <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 text-white">熱門潛水地點推薦</h2>
+      <h2 class="mb-10 text-center text-2xl font-bold text-white md:text-3xl">熱門潛水地點推薦</h2>
       <div class="grid gap-4 md:grid-cols-3">
         <div
           v-for="(loc, i) in locations"
           :key="i"
           ref="cardRefs"
-          class="bg-transparent overflow-hidden hover:scale-105 transition px-4 lg:p-0 h-[200px] lg:h-[300px] flex flex-col"
+          class="flex h-[200px] flex-col overflow-hidden bg-transparent px-4 transition hover:scale-105 lg:h-[300px] lg:p-0"
         >
           <div class="relative h-full w-full overflow-hidden">
             <div
-              class="absolute hidden lg:block inset-0 bg-cover bg-center"
+              class="absolute inset-0 hidden bg-cover bg-center lg:block"
               :style="{
                 backgroundImage: `url(${loc.img})`,
                 maskImage: getBlobMaskUrl(i),
@@ -26,15 +26,15 @@
               }"
             ></div>
             <div
-              class="absolute lg:hidden inset-0 bg-cover bg-center"
+              class="absolute inset-0 bg-cover bg-center lg:hidden"
               :style="{
                 backgroundImage: `url(${loc.img})`,
               }"
             ></div>
             <div
-              class="absolute left-1/2 top-1/2 transform -translate-y-1/2 -translate-x-1/2 flex-1 flex flex-col"
+              class="absolute top-1/2 left-1/2 flex flex-1 -translate-x-1/2 -translate-y-1/2 transform flex-col"
             >
-              <h3 class="text-base lg:text-xl font-bold text-white mb-2">
+              <h3 class="mb-2 text-base font-bold text-white lg:text-xl">
                 {{ loc.name }}
               </h3>
               <!-- <p class="text-gray-600 mb-4 flex-1">{{ loc.desc }}</p> -->
@@ -47,7 +47,7 @@
 </template>
 
 <script setup>
-import { useTemplateRef, onMounted } from "vue";
+import { useTemplateRef, onMounted } from 'vue';
 const { $anime, $animeUtils, $animeStagger } = useNuxtApp();
 
 // 使用 base64 編碼的 SVG 作為 mask-image
@@ -64,25 +64,28 @@ function getBlobMaskUrl(_index) {
   return blobMaskUrl;
 }
 
-const cardRefs = useTemplateRef("cardRefs");
+const cardRefs = useTemplateRef('cardRefs');
 
 const grid = [3, 2];
 
 function animateCards() {
-  const from = $animeUtils.random(0, 3);
+  const from = $animeUtils.random(3, 2);
   // const ramdomElement = $animeUtils.randomPick(cardRefs.value);
   $anime(cardRefs.value, {
     translateX: [
-      { to: $animeStagger("2px", { grid, from, axis: "x" }) },
-      { to: 0, ease: "inOutQuad" },
+      { to: $animeStagger('-3px', { grid, from, axis: 'x' }) },
+      { to: 0, ease: 'inOutQuad' },
     ],
     translateY: [
-      { to: $animeStagger("2px", { grid, from, axis: "y" }) },
-      { to: 0, ease: "inOutQuad" },
+      { to: $animeStagger('-3px', { grid, from, axis: 'y' }) },
+      { to: 0, ease: 'inOutQuad' },
     ],
-    rotate: $animeStagger("-2deg", { grid, from }),
-    opacity: [{ to: 0.8, ease: "inOutCubic" }, { to: 1 }],
-    delay: $animeStagger(85, { grid, from }),
+    rotate: [
+      { to: $animeStagger('1'), ease: 'inOutQuad' },
+      { to: 0, ease: 'inOutQuad' },
+    ],
+    opacity: [{ to: 0.8, ease: 'inOutCubic' }, { to: 1 }],
+    delay: $animeStagger(185, { grid, from }),
     onComplete: animateCards,
   });
 }
@@ -94,34 +97,34 @@ onMounted(() => {
 // 推薦潛水地點資料，可依需求調整
 const locations = [
   {
-    name: "大堡礁（澳洲）",
-    img: "https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80",
-    desc: "世界最大珊瑚礁群，色彩繽紛的海底世界與豐富生態。",
+    name: '大堡礁（澳洲）',
+    img: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
+    desc: '世界最大珊瑚礁群，色彩繽紛的海底世界與豐富生態。',
   },
   {
-    name: "帛琉藍洞",
-    img: "https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=600&q=80",
-    desc: "知名的藍洞潛水勝地，水質清澈，能見度極高。",
+    name: '帛琉藍洞',
+    img: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=600&q=80',
+    desc: '知名的藍洞潛水勝地，水質清澈，能見度極高。',
   },
   {
-    name: "峇里島圖蘭本",
-    img: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80",
-    desc: "著名沈船潛點，適合各級潛水員，生態豐富。",
+    name: '峇里島圖蘭本',
+    img: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
+    desc: '著名沈船潛點，適合各級潛水員，生態豐富。',
   },
   {
-    name: "菲律賓阿波島",
-    img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
-    desc: "火山島地形，珊瑚與海龜共舞的夢幻場域。",
+    name: '菲律賓阿波島',
+    img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
+    desc: '火山島地形，珊瑚與海龜共舞的夢幻場域。',
   },
   {
-    name: "紅海達哈布",
-    img: "https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80",
-    desc: "藍洞與珊瑚花園，潛水天堂。",
+    name: '紅海達哈布',
+    img: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80',
+    desc: '藍洞與珊瑚花園，潛水天堂。',
   },
   {
-    name: "沖繩慶良間群島",
-    img: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=600&q=80",
-    desc: "白沙與蔚藍海水，豐富海洋生態。",
+    name: '沖繩慶良間群島',
+    img: 'https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=600&q=80',
+    desc: '白沙與蔚藍海水，豐富海洋生態。',
   },
 ];
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="relative min-h-[350px] overflow-hidden">
-    <div class="absolute inset-0 w-full h-full">
+    <div class="absolute inset-0 h-full w-full">
       <WavesSVG />
     </div>
 
@@ -35,13 +35,13 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import CircleButtons from "~/components/main-function/CircleButtons.vue";
-import PanelComponent from "~/components/main-function/PanelComponent.vue";
-import LocationSelect from "~/components/main-function/LocationSelect.vue";
-import TaiwanMap from "~/components/main-function/TaiwanMap.vue";
-import ServiceSearch from "~/components/main-function/ServiceSearch.vue";
-import WavesSVG from "~/components/main-function/WavesSVG.vue";
+import { ref } from 'vue';
+import CircleButtons from '~/components/main-function/CircleButtons.vue';
+import PanelComponent from '~/components/main-function/PanelComponent.vue';
+import LocationSelect from '~/components/main-function/LocationSelect.vue';
+import TaiwanMap from '~/components/main-function/TaiwanMap.vue';
+import ServiceSearch from '~/components/main-function/ServiceSearch.vue';
+import WavesSVG from '~/components/base/WavesSVG.vue';
 
 const circleButtonsRef = ref(null);
 const activeComponent = ref(null);

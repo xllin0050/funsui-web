@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full">
+  <div class="flex min-h-screen flex-col">
     <AppHeader />
-    <div class="main-content pt-[5rem] w-full">
+    <div class="flex h-full flex-1 flex-col pt-[5rem]">
       <slot />
     </div>
     <AppFooter />
@@ -9,13 +9,8 @@
 </template>
 
 <script setup>
-import AppFooter from "~/components/AppFooter.vue";
-import AppHeader from "~/components/AppHeader.vue";
+import AppFooter from '~/components/AppFooter.vue';
+import AppHeader from '~/components/AppHeader.vue';
 </script>
 
-<style scoped>
-.main-content {
-  min-height: calc(100vh - 6rem);
-}
-
-</style>
+<style scoped></style>
