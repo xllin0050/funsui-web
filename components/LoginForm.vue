@@ -36,8 +36,11 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '~/stores/auth';
+const authStore = useAuthStore();
 const { $supabase } = useNuxtApp();
 const { $Swal } = useNuxtApp();
+
 const router = useRouter();
 
 const formData = ref({
@@ -63,6 +66,7 @@ const handleSubmit = async () => {
       title: '登入成功',
       text: '歡迎回到我們的網站!',
     });
+    authStore.setUserId(data.session.user.id);
     console.log(data.session.access_token);
     console.log(data.session.user.id);
 

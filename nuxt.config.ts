@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ['@nuxt/eslint', '@nuxt/test-utils/module', '@nuxt/image', '@nuxt/icon'],
+  modules: ['@pinia/nuxt', '@nuxt/eslint', '@nuxt/test-utils/module', '@nuxt/image', '@nuxt/icon'],
   // 將環境變數暴露給客戶端
   runtimeConfig: {
     // 僅在伺服器端可用的私有金鑰

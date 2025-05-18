@@ -38,6 +38,8 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '~/stores/auth';
+const authStore = useAuthStore();
 const { $supabase } = useNuxtApp();
 const { $Swal } = useNuxtApp();
 const router = useRouter();
@@ -63,6 +65,7 @@ const handleLogout = async () => {
       title: '登出成功',
       text: '感謝您的使用!',
     });
+    authStore.clearUser();
     await router.push('/');
   }
 };
