@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <form>
+  <div class="mx-auto max-w-lg">
+    <form @submit.prevent="handleSubmit">
       <!-- 電子信箱 -->
       <div class="form-group">
         <label for="email">電子信箱</label>
@@ -22,24 +22,53 @@
           v-model="formData.password"
           type="password"
           required
-          placeholder="請設定密碼 (至少 6 位)"
+          placeholder="請輸入密碼"
           class="form-input"
           :disabled="loading"
           minlength="6"
         />
+      </div>
+      <div class="flex justify-center">
+        <button type="submit" class="submit-button" :disabled="loading">登入</button>
       </div>
     </form>
   </div>
 </template>
 
 <script setup>
-// const { $supabase } = useNuxtApp();
-// const { $Swal } = useNuxtApp();
+const { $supabase } = useNuxtApp();
+const { $Swal } = useNuxtApp();
+const router = useRouter();
 
 const formData = ref({
   email: '',
   password: '',
 });
+
+const handleSubmit = async () => {
+  const { data, error } = await $supabase.auth.signInWithPassword({
+    email: formData.value.email,
+    password: formData.value.password,
+  });
+
+  if (error) {
+    $Swal.fire({
+      icon: 'error',
+      title: error.code,
+      text: error.message || '登入過程中發生錯誤，請稍後再試',
+    });
+  } else {
+    $Swal.fire({
+      icon: 'success',
+      title: '登入成功',
+      text: '歡迎回到我們的網站!',
+    });
+    console.log(data.session.access_token);
+    console.log(data.session.user.id);
+
+    await router.push('/');
+  }
+};
 </script>
 
 <style scoped>

@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from "vue";
+import { ref } from 'vue';
 
 const props = defineProps({
   activeComponent: {
@@ -36,13 +36,13 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:activeComponent"]);
+const emit = defineEmits(['update:activeComponent']);
 
 // 圓形按鈕相關變數
 const circles = [
-  { component: "search", icon: "heroicons:magnifying-glass", tooltip: "搜尋潛水服務" },
-  { component: "location", icon: "heroicons:map-pin", tooltip: "熱門潛水地點" },
-  { component: "map", icon: "heroicons:map", tooltip: "台灣潛水地圖" },
+  { component: 'search', icon: 'heroicons:magnifying-glass', tooltip: '搜尋潛水服務' },
+  { component: 'location', icon: 'heroicons:map-pin', tooltip: '熱門潛水地點' },
+  { component: 'map', icon: 'heroicons:map', tooltip: '台灣潛水地圖' },
 ];
 
 // 提示框相關變數
@@ -63,9 +63,9 @@ const hideTooltip = index => {
 const getCircleStyle = index => {
   // 水平置中排列按鈕
   return {
-    top: "50%",
+    top: '50%',
     left: `${(index + 1) * 25}%`,
-    transform: "translate(-50%, -50%)",
+    transform: 'translate(-50%, -50%)',
   };
 };
 
@@ -74,13 +74,13 @@ const toggleComponent = component => {
   if (props.activeComponent === component) {
     closeActiveComponent();
   } else {
-    emit("update:activeComponent", component);
+    emit('update:activeComponent', component);
   }
 };
 
 // 關閉當前激活的組件
 const closeActiveComponent = () => {
-  emit("update:activeComponent", null);
+  emit('update:activeComponent', null);
 };
 
 // 圓形容器參考
