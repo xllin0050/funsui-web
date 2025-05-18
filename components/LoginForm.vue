@@ -28,20 +28,32 @@
           minlength="6"
         />
       </div>
+      <!-- 錯誤訊息 -->
+      <div v-if="formError || loginError" class="mb-4 text-center text-red-500 text-sm">
+        {{ formError || loginError }}
+      </div>
+      
       <div class="flex justify-center">
-        <button type="submit" class="submit-button" :disabled="loading">登入</button>
+        <button 
+          type="submit" 
+          class="submit-button" 
+          :disabled="loading"
+          :class="{ 'opacity-50 cursor-not-allowed': loading }"
+        >
+          <span v-if="loading" class="inline-block animate-spin mr-2">↻</span>
+          <span>登入</span>
+        </button>
       </div>
     </form>
   </div>
 </template>
 
 <script setup>
-import { useAuthStore } from '~/stores/auth';
-const authStore = useAuthStore();
-const { $supabase } = useNuxtApp();
-const { $Swal } = useNuxtApp();
+import { ref } from 'vue';
+import { useLogIn } from '~/composables/useLogIn';
 
-const router = useRouter();
+const { logIn, loading, error: loginError } = useLogIn();
+const formError = ref('');
 
 const formData = ref({
   email: '',
@@ -49,28 +61,27 @@ const formData = ref({
 });
 
 const handleSubmit = async () => {
-  const { data, error } = await $supabase.auth.signInWithPassword({
+  formError.value = ''; // 清除之前的錯誤
+  
+  if (!formData.value.email || !formData.value.password) {
+    formError.value = '請輸入電子郵件和密碼';
+    return;
+  }
+
+  const { success, error } = await logIn({
     email: formData.value.email,
     password: formData.value.password,
   });
-
-  if (error) {
-    $Swal.fire({
-      icon: 'error',
-      title: error.code,
-      text: error.message || '登入過程中發生錯誤，請稍後再試',
-    });
-  } else {
-    $Swal.fire({
-      icon: 'success',
-      title: '登入成功',
-      text: '歡迎回到我們的網站!',
-    });
-    authStore.setUserId(data.session.user.id);
-    console.log(data.session.access_token);
-    console.log(data.session.user.id);
-
-    await router.push('/');
+  
+  if (success) {
+    // 登入成功，重置表單
+    formData.value = {
+      email: '',
+      password: '',
+    };
+  } else if (error) {
+    // 顯示登入錯誤
+    formError.value = error;
   }
 };
 </script>
