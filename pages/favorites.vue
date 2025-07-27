@@ -43,9 +43,7 @@
         </div>
       </div>
     </div>
-    <div v-if="favorites.length === 0" class="mt-8 text-center text-gray-400">
-      目前沒有收藏紀錄
-    </div>
+
     <Modal :visible="showModal" @close="closeModal">
       <template #header>
         <h3 v-if="selectedItem">{{ selectedItem.name }} 詳細資訊</h3>
@@ -94,36 +92,16 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
 import WavesSVG from '~/components/base/WavesSVG.vue';
 import Modal from '~/components/Modal.vue';
+import { useFavoritesStore } from '~/stores/favorites';
 
-const favorites = ref([
-  {
-    id: 1,
-    name: '綠島深潛體驗',
-    location: '綠島',
-    type: '體驗',
-    category: '潛水課程',
-  },
-  {
-    id: 2,
-    name: '小琉球自由潛水',
-    location: '小琉球',
-    type: '自由潛',
-    category: '活動',
-  },
-  {
-    id: 3,
-    name: '龍洞專業導潛',
-    location: '龍洞',
-    type: '導潛',
-    category: '專業服務',
-  },
-]);
+const favoritesStore = useFavoritesStore();
+const { favorites } = storeToRefs(favoritesStore);
 
-const removeFavorite = id => {
-  favorites.value = favorites.value.filter(item => item.id !== id);
+const removeFavorite = (id) => {
+  favoritesStore.removeFavorite(id);
 };
 
 // Modal 相關狀態

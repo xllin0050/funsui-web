@@ -145,8 +145,10 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useServices } from "~/composables/useServices";
 
 const router = useRouter();
+const { searchServices: fetchServices } = useServices();
 
 // 狀態管理
 const searchQuery = ref("");
@@ -193,7 +195,7 @@ const toggleAdvancedFilter = () => {
 };
 
 // 搜索服務並導航到搜索結果頁面
-const searchServices = () => {
+const searchServices = async () => {
   // 構建搜索參數
   const params = {};
 
@@ -208,8 +210,11 @@ const searchServices = () => {
   // 在控制台輸出搜索參數
   console.log("搜索參數:", params);
 
+  // 執行實際的數據庫搜尋
+  const results = await fetchServices(params);
+
   // 觸發搜索事件，讓父組件知道
-  emit("search", params);
+  emit("search", { params, results });
 
   // 導航到搜索結果頁面，帶上查詢參數
   router.push({ path: "/search", query: params });
